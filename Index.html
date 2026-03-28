@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Planner">
+<meta name="theme-color" content="#0f0f0f">
+<title>Bedrijfsplanner</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0f0f;
+    --surface: #1a1a1a;
+    --surface2: #242424;
+    --border: #2e2e2e;
+    --accent: #e8c547;
+    --accent2: #e87347;
+    --accent3: #47b4e8;
+    --red: #e85447;
+    --orange: #e87347;
+    --green: #47e8a0;
+    --gray: #888;
+    --text: #f0ede6;
+    --text2: #aaa;
+    --radius: 10px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+/* HEADER */
+header {
+background: var(–surface);
+border-bottom: 1px solid var(–border);
+padding: 18px 28px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+position: sticky;
+top: 0;
+z-index: 100;
+}
+.logo {
+font-family: ‘DM Serif Display’, serif;
+font-size: 22px;
+color: var(–accent);
+letter-spacing: -0.5px;
+}
+.logo span { color: var(–text2); font-size: 13px; font-family: ‘DM Sans’, sans-serif; font-weight: 300; margin-left: 10px; }
+.header-stats {
+display: flex;
+gap: 20px;
+align-items: center;
+}
+.stat {
+text-align: center;
+}
+.stat-num {
+font-family: ‘DM Mono’, monospace;
+font-size: 20px;
+font-weight: 500;
+color: var(–accent);
+line-height: 1;
+}
+.stat-label { font-size: 10px; color: var(–text2); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+
+/* TABS */
+.tabs {
+display: flex;
+border-bottom: 1px solid var(–border);
+background: var(–surface);
+padding: 0 28px;
+}
+.tab {
+padding: 12px 20px;
+font-size: 13px;
+font-weight: 500;
+color: var(–text2);
+cursor: pointer;
+border-bottom: 2px solid transparent;
+transition: all 0.2s;
+user-select: none;
+}
+.tab:hover { color: var(–text); }
+.tab.active { color: var(–accent); border-bottom-color: var(–accent); }
+
+/* MAIN LAYOUT */
+.main {
+max-width: 1100px;
+margin: 0 auto;
+padding: 28px 28px;
+}
+
+/* PANELS */
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* SECTION */
+.section {
+margin-bottom: 28px;
+}
+.section-header {
+display: flex;
+align-items: center;
+gap: 10px;
+margin-bottom: 14px;
+}
+.section-icon { font-size: 16px; }
+.section-title {
+font-family: ‘DM Serif Display’, serif;
+font-size: 17px;
+color: var(–text);
+}
+.section-badge {
+font-family: ‘DM Mono’, monospace;
+font-size: 11px;
+background: var(–surface2);
+border: 1px solid var(–border);
+color: var(–text2);
+padding: 2px 8px;
+border-radius: 20px;
+}
+.priority-tag {
+font-size: 10px;
+font-weight: 600;
+text-transform: uppercase;
+letter-spacing: 1px;
+padding: 2px 8px;
+border-radius: 4px;
+margin-left: auto;
+}
+.priority-direct { background: rgba(232,84,71,0.15); color: var(–red); border: 1px solid rgba(232,84,71,0.3); }
+.priority-week { background: rgba(232,115,71,0.15); color: var(–orange); border: 1px solid rgba(232,115,71,0.3); }
+.priority-strategie { background: rgba(71,180,232,0.15); color: var(–accent3); border: 1px solid rgba(71,180,232,0.3); }
+
+/* TASK ITEMS */
+.tasks { display: flex; flex-direction: column; gap: 6px; }
+.task {
+display: flex;
+align-items: center;
+gap: 12px;
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: var(–radius);
+padding: 13px 16px;
+cursor: pointer;
+transition: all 0.18s;
+position: relative;
+overflow: hidden;
+}
+.task::before {
+content: ‘’;
+position: absolute;
+left: 0; top: 0; bottom: 0;
+width: 3px;
+background: var(–border);
+transition: background 0.2s;
+}
+.task.direct::before { background: var(–red); }
+.task.week::before { background: var(–orange); }
+.task.strategie::before { background: var(–accent3); }
+.task:hover { background: var(–surface2); border-color: #444; transform: translateX(2px); }
+.task.done {
+opacity: 0.4;
+}
+.task.done .task-text { text-decoration: line-through; color: var(–text2); }
+
+.checkbox {
+width: 20px;
+height: 20px;
+border-radius: 5px;
+border: 1.5px solid var(–border);
+flex-shrink: 0;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: all 0.18s;
+background: transparent;
+}
+.task.done .checkbox {
+background: var(–green);
+border-color: var(–green);
+}
+.checkmark { color: #000; font-size: 12px; display: none; }
+.task.done .checkmark { display: block; }
+
+.task-content { flex: 1; min-width: 0; }
+.task-text { font-size: 14px; font-weight: 400; line-height: 1.4; }
+.task-sub { font-size: 12px; color: var(–text2); margin-top: 2px; }
+
+.task-cat {
+font-family: ‘DM Mono’, monospace;
+font-size: 10px;
+color: var(–text2);
+background: var(–surface2);
+padding: 2px 7px;
+border-radius: 4px;
+white-space: nowrap;
+flex-shrink: 0;
+}
+
+/* DAGPLANNING */
+.day-grid {
+display: grid;
+grid-template-columns: 80px 1fr;
+gap: 0;
+}
+.time-slot {
+font-family: ‘DM Mono’, monospace;
+font-size: 11px;
+color: var(–text2);
+padding: 10px 14px 10px 0;
+border-right: 1px solid var(–border);
+text-align: right;
+line-height: 1;
+}
+.slot-content {
+padding: 8px 0 8px 16px;
+border-bottom: 1px solid var(–border);
+min-height: 44px;
+}
+.slot-task {
+background: var(–surface2);
+border-left: 3px solid var(–accent);
+padding: 6px 12px;
+border-radius: 0 6px 6px 0;
+font-size: 13px;
+margin-bottom: 4px;
+}
+.slot-task.rood { border-color: var(–red); }
+.slot-task.oranje { border-color: var(–orange); }
+.slot-task.blauw { border-color: var(–accent3); }
+.slot-task .slot-label { font-size: 10px; color: var(–text2); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 2px; }
+
+/* AI ANALYSE */
+.analyse-card {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: var(–radius);
+padding: 20px 24px;
+margin-bottom: 16px;
+}
+.analyse-card h3 {
+font-family: ‘DM Serif Display’, serif;
+font-size: 16px;
+margin-bottom: 12px;
+display: flex;
+align-items: center;
+gap: 8px;
+}
+.analyse-card p { font-size: 14px; color: var(–text2); line-height: 1.7; }
+.analyse-card ul { padding-left: 18px; }
+.analyse-card li { font-size: 14px; color: var(–text2); line-height: 1.8; }
+.analyse-card li strong { color: var(–text); }
+
+.focus-box {
+background: linear-gradient(135deg, rgba(232,197,71,0.08), rgba(232,115,71,0.06));
+border: 1px solid rgba(232,197,71,0.25);
+border-radius: var(–radius);
+padding: 20px 24px;
+margin-bottom: 16px;
+}
+.focus-box h3 {
+font-family: ‘DM Serif Display’, serif;
+font-size: 18px;
+color: var(–accent);
+margin-bottom: 10px;
+}
+.focus-list { display: flex; flex-direction: column; gap: 8px; }
+.focus-item {
+display: flex;
+align-items: center;
+gap: 12px;
+font-size: 14px;
+color: var(–text);
+}
+.focus-num {
+font-family: ‘DM Mono’, monospace;
+font-size: 12px;
+background: var(–accent);
+color: #000;
+width: 22px;
+height: 22px;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-weight: 600;
+flex-shrink: 0;
+}
+
+.progress-row {
+display: flex;
+align-items: center;
+gap: 14px;
+margin-bottom: 10px;
+}
+.progress-label { font-size: 13px; color: var(–text2); width: 120px; flex-shrink: 0; }
+.progress-bar {
+flex: 1;
+height: 6px;
+background: var(–surface2);
+border-radius: 3px;
+overflow: hidden;
+}
+.progress-fill {
+height: 100%;
+border-radius: 3px;
+transition: width 0.6s ease;
+}
+.progress-pct { font-family: ‘DM Mono’, monospace; font-size: 12px; color: var(–text2); width: 36px; text-align: right; }
+
+/* ADD TASK */
+.add-task-bar {
+display: flex;
+gap: 10px;
+margin-bottom: 24px;
+}
+.add-input {
+flex: 1;
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: var(–radius);
+padding: 11px 16px;
+color: var(–text);
+font-family: ‘DM Sans’, sans-serif;
+font-size: 14px;
+outline: none;
+transition: border-color 0.2s;
+}
+.add-input:focus { border-color: var(–accent); }
+.add-input::placeholder { color: var(–text2); }
+.add-select {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: var(–radius);
+padding: 11px 12px;
+color: var(–text);
+font-family: ‘DM Sans’, sans-serif;
+font-size: 13px;
+outline: none;
+cursor: pointer;
+}
+.add-btn {
+background: var(–accent);
+color: #000;
+border: none;
+border-radius: var(–radius);
+padding: 11px 20px;
+font-family: ‘DM Sans’, sans-serif;
+font-weight: 600;
+font-size: 13px;
+cursor: pointer;
+transition: opacity 0.2s;
+}
+.add-btn:hover { opacity: 0.85; }
+
+.filter-bar {
+display: flex;
+gap: 8px;
+margin-bottom: 20px;
+flex-wrap: wrap;
+}
+.filter-btn {
+padding: 6px 14px;
+border-radius: 20px;
+font-size: 12px;
+font-weight: 500;
+cursor: pointer;
+border: 1px solid var(–border);
+background: var(–surface);
+color: var(–text2);
+transition: all 0.2s;
+}
+.filter-btn.active, .filter-btn:hover {
+background: var(–accent);
+color: #000;
+border-color: var(–accent);
+}
+
+.empty-state {
+text-align: center;
+padding: 40px;
+color: var(–text2);
+font-size: 14px;
+}
+
+/* MIC BUTTON */
+.mic-btn {
+width: 44px;
+height: 44px;
+border-radius: 50%;
+border: 1.5px solid var(–border);
+background: var(–surface);
+color: var(–text2);
+font-size: 18px;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-shrink: 0;
+transition: all 0.2s;
+position: relative;
+}
+.mic-btn:hover { border-color: var(–accent); color: var(–accent); }
+.mic-btn.listening {
+background: var(–red);
+border-color: var(–red);
+color: #fff;
+animation: pulse 1s infinite;
+}
+@keyframes pulse {
+0%, 100% { box-shadow: 0 0 0 0 rgba(232,84,71,0.4); }
+50% { box-shadow: 0 0 0 8px rgba(232,84,71,0); }
+}
+.mic-status {
+font-size: 12px;
+color: var(–text2);
+margin-bottom: 10px;
+min-height: 18px;
+font-style: italic;
+}
+.mic-status.active { color: var(–red); }
+
+/* INSTALL BANNER */
+.install-banner {
+background: linear-gradient(135deg, #1a1a1a, #242424);
+border: 1px solid rgba(232,197,71,0.3);
+border-radius: 14px;
+padding: 20px 22px;
+margin: 20px 0;
+display: none;
+}
+.install-banner.show { display: block; }
+.install-banner h3 { font-family: ‘DM Serif Display’, serif; font-size: 16px; color: var(–accent); margin-bottom: 12px; }
+.install-steps { display: flex; flex-direction: column; gap: 10px; }
+.install-step {
+display: flex; align-items: flex-start; gap: 12px;
+font-size: 13px; color: var(–text2); line-height: 1.5;
+}
+.install-step-num {
+background: var(–accent); color: #000; font-weight: 700;
+font-size: 11px; width: 20px; height: 20px; border-radius: 50%;
+display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
+}
+.install-step strong { color: var(–text); }
+.install-close {
+margin-top: 14px; font-size: 12px; color: var(–text2);
+cursor: pointer; text-decoration: underline;
+}
+/* Safe area for iPhone notch */
+body { padding-bottom: env(safe-area-inset-bottom); }
+header { padding-top: max(18px, env(safe-area-inset-top)); }
+</style>
+
+</head>
+<body>
+
+<header>
+  <div class="logo">Bedrijfsplanner <span>jouw command center</span></div>
+  <div class="header-stats">
+    <div class="stat">
+      <div class="stat-num" id="totalTasks">0</div>
+      <div class="stat-label">Totaal</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="doneTasks" style="color:var(--green)">0</div>
+      <div class="stat-label">Klaar</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="openTasks" style="color:var(--orange)">0</div>
+      <div class="stat-label">Open</div>
+    </div>
+  </div>
+</header>
+
+<div class="tabs">
+  <div class="tab active" onclick="showPanel('todo')">📋 To-Do Lijst</div>
+  <div class="tab" onclick="showPanel('dag')">📅 Dagplanning</div>
+  <div class="tab" onclick="showPanel('analyse')">📊 Analyse & Advies</div>
+</div>
+
+<div class="main">
+
+  <!-- INSTALL BANNER -->
+
+  <div class="install-banner" id="installBanner">
+    <h3>📱 Zet op je beginscherm</h3>
+    <div class="install-steps">
+      <div class="install-step"><div class="install-step-num">1</div><div>Ga naar <strong>github.com</strong> en maak een gratis account aan</div></div>
+      <div class="install-step"><div class="install-step-num">2</div><div>Maak een nieuwe repository aan, noem hem <strong>bedrijfsplanner</strong></div></div>
+      <div class="install-step"><div class="install-step-num">3</div><div>Upload dit bestand en hernoem het naar <strong>index.html</strong></div></div>
+      <div class="install-step"><div class="install-step-num">4</div><div>Ga naar <strong>Settings → Pages → Branch: main → Save</strong></div></div>
+      <div class="install-step"><div class="install-step-num">5</div><div>Open de link in <strong>Safari</strong> op je iPhone</div></div>
+      <div class="install-step"><div class="install-step-num">6</div><div>Tik op het <strong>Deel-icoon</strong> ↑ → kies <strong>"Zet op beginscherm"</strong></div></div>
+    </div>
+    <div class="install-close" onclick="closeInstall()">Sluiten</div>
+  </div>
+
+  <!-- TO-DO PANEL -->
+
+  <div class="panel active" id="panel-todo">
+
+```
+<div class="mic-status" id="micStatus">🎤 Druk op de microfoon en spreek je taak in</div>
+<div class="add-task-bar">
+  <button class="mic-btn" id="micBtn" onclick="toggleMic()" title="Inspreken in het Nederlands">🎤</button>
+  <input class="add-input" id="newTaskInput" placeholder="Taak intypen of inspreken..." onkeydown="if(event.key==='Enter') addTask()">
+  <select class="add-select" id="newTaskPriority">
+    <option value="direct">🔴 Direct</option>
+    <option value="week">🟠 Deze week</option>
+    <option value="strategie">🟢 Strategie</option>
+  </select>
+  <select class="add-select" id="newTaskCat">
+    <option value="Communicatie">Communicatie</option>
+    <option value="Financieel">Financieel</option>
+    <option value="Operatie">Operatie</option>
+    <option value="Personeel">Personeel</option>
+    <option value="HR">HR</option>
+    <option value="Marketing">Marketing</option>
+    <option value="Overig">Overig</option>
+  </select>
+  <button class="add-btn" onclick="addTask()">+ Toevoegen</button>
+</div>
+
+<div class="filter-bar">
+  <div class="filter-btn active" onclick="setFilter('alle', this)">Alle</div>
+  <div class="filter-btn" onclick="setFilter('direct', this)">🔴 Direct</div>
+  <div class="filter-btn" onclick="setFilter('week', this)">🟠 Deze week</div>
+  <div class="filter-btn" onclick="setFilter('strategie', this)">🟢 Strategie</div>
+  <div class="filter-btn" onclick="setFilter('open', this)">Open</div>
+  <div class="filter-btn" onclick="setFilter('done', this)">✅ Afgerond</div>
+</div>
+
+<div id="taskList"></div>
+```
+
+  </div>
+
+  <!-- DAG PANEL -->
+
+  <div class="panel" id="panel-dag">
+    <div class="section">
+      <div class="section-header">
+        <span class="section-icon">🌅</span>
+        <span class="section-title">Slimme dagplanning – vandaag</span>
+      </div>
+      <div class="day-grid" id="dayGrid"></div>
+    </div>
+  </div>
+
+  <!-- ANALYSE PANEL -->
+
+  <div class="panel" id="panel-analyse">
+    <div id="analyseContent"></div>
+  </div>
+
+</div>
+
+<script>
+// ---- DATA ----
+const initialTasks = [
+  { id: 1, text: "Guido – mail versturen (reclame + overzicht)", cat: "Communicatie", priority: "direct", done: false },
+  { id: 2, text: "Pauline – wacht op reactie", cat: "Communicatie", priority: "direct", done: false },
+  { id: 3, text: "Lefier – Benningweg 12, Harkstede (prijs maken)", cat: "Financieel", priority: "direct", done: false },
+  { id: 4, text: "Fivelstraat – overzicht + totaalbedrag", cat: "Financieel", priority: "week", done: false },
+  { id: 5, text: "Lars Lingbeek – overleg (deel factureren)", cat: "Financieel", priority: "week", done: false },
+  { id: 6, text: "Bolhuis – financieel afronden", cat: "Financieel", priority: "week", done: false },
+  { id: 7, text: "Ramona Steenhuis – financieel afronden", cat: "Financieel", priority: "week", done: false },
+  { id: 8, text: "Henk – Laurens Schilder & Plus (overleg)", cat: "Financieel", priority: "week", done: false },
+  { id: 9, text: "Henk – factuur broek", cat: "Financieel", priority: "week", done: false },
+  { id: 10, text: "Henk – lampje overleg", cat: "Financieel", priority: "week", done: false },
+  { id: 11, text: "Google Winschoten – kunstmest + uitvoering", cat: "Operatie", priority: "week", done: false },
+  { id: 12, text: "Bert – update stenen familie Faatstra", cat: "Operatie", priority: "week", done: false },
+  { id: 13, text: "Jan Volstra (Koybella) – project 25/0810", cat: "Operatie", priority: "week", done: false },
+  { id: 14, text: "Riem – overleg inzet solistaan", cat: "Personeel", priority: "week", done: false },
+  { id: 15, text: "Riem → Gerrit Heikens – uurtarief opvragen", cat: "Personeel", priority: "week", done: false },
+  { id: 16, text: "Thomas – opvolging gesprek", cat: "Personeel", priority: "week", done: false },
+  { id: 17, text: "Thomas – loonsverhoging beoordelen", cat: "Personeel", priority: "week", done: false },
+  { id: 18, text: "Stan – functioneringsgesprek inplannen", cat: "HR", priority: "week", done: false },
+  { id: 19, text: "Jitse – functioneringsgesprek inplannen", cat: "HR", priority: "week", done: false },
+  { id: 20, text: "Antema – vervolg (via Arien / bedrijfsarts)", cat: "HR", priority: "week", done: false },
+  { id: 21, text: "Arien – HR-inrichting verder uitwerken", cat: "HR", priority: "week", done: false },
+  { id: 22, text: "MT – borgen / doorzetten", cat: "Operatie", priority: "strategie", done: false },
+  { id: 23, text: "Certificeringen personeel: inventariseren, plannen, inschrijven", cat: "Personeel", priority: "strategie", done: false },
+  { id: 24, text: "Basjan – kranen & bouwhekken inmeten", cat: "Marketing", priority: "strategie", done: false },
+  { id: 25, text: "Guido – reclame uitvoeren (na mail en ontwerp)", cat: "Marketing", priority: "strategie", done: false },
+  { id: 26, text: "Bedrijf zoeken – wrapping bussen", cat: "Marketing", priority: "strategie", done: false },
+  { id: 27, text: "Nieuwe trui – betere pasvorm", cat: "Overig", priority: "strategie", done: false },
+  { id: 28, text: "Koffiezetapparaat afstellen", cat: "Overig", priority: "strategie", done: false },
+];
+
+let tasks = JSON.parse(localStorage.getItem('bp_tasks') || 'null') || initialTasks;
+let nextId = Math.max(...tasks.map(t => t.id)) + 1;
+let currentFilter = 'alle';
+
+function save() { localStorage.setItem('bp_tasks', JSON.stringify(tasks)); }
+
+function addTask() {
+  const input = document.getElementById('newTaskInput');
+  const text = input.value.trim();
+  if (!text) return;
+  tasks.push({
+    id: nextId++,
+    text,
+    cat: document.getElementById('newTaskCat').value,
+    priority: document.getElementById('newTaskPriority').value,
+    done: false
+  });
+  input.value = '';
+  save();
+  renderAll();
+}
+
+function toggleTask(id) {
+  const t = tasks.find(t => t.id === id);
+  if (t) { t.done = !t.done; save(); renderAll(); }
+}
+
+function setFilter(f, el) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  renderTasks();
+}
+
+function getFiltered() {
+  if (currentFilter === 'alle') return tasks;
+  if (currentFilter === 'open') return tasks.filter(t => !t.done);
+  if (currentFilter === 'done') return tasks.filter(t => t.done);
+  return tasks.filter(t => t.priority === currentFilter);
+}
+
+function renderTasks() {
+  const list = document.getElementById('taskList');
+  const filtered = getFiltered();
+
+  // Group by priority
+  const groups = [
+    { key: 'direct', label: '🔴 Direct – NU', badge: 'priority-direct' },
+    { key: 'week', label: '🟠 Deze week', badge: 'priority-week' },
+    { key: 'strategie', label: '🟢 Strategie / Langetermijn', badge: 'priority-strategie' },
+  ];
+
+  let html = '';
+  groups.forEach(g => {
+    const items = filtered.filter(t => t.priority === g.key);
+    if (!items.length) return;
+    html += `<div class="section">
+      <div class="section-header">
+        <span class="section-title">${g.label}</span>
+        <span class="section-badge">${items.length}</span>
+      </div>
+      <div class="tasks">`;
+    items.forEach(t => {
+      html += `<div class="task ${g.key} ${t.done ? 'done' : ''}" onclick="toggleTask(${t.id})">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="task-content">
+          <div class="task-text">${t.text}</div>
+        </div>
+        <div class="task-cat">${t.cat}</div>
+      </div>`;
+    });
+    html += `</div></div>`;
+  });
+
+  if (!html) html = `<div class="empty-state">Geen taken gevonden in deze categorie.</div>`;
+  list.innerHTML = html;
+}
+
+function renderStats() {
+  document.getElementById('totalTasks').textContent = tasks.length;
+  document.getElementById('doneTasks').textContent = tasks.filter(t => t.done).length;
+  document.getElementById('openTasks').textContent = tasks.filter(t => !t.done).length;
+}
+
+function renderDag() {
+  const open = tasks.filter(t => !t.done);
+  const direct = open.filter(t => t.priority === 'direct');
+  const week = open.filter(t => t.priority === 'week' && t.cat === 'Financieel');
+  const personeel = open.filter(t => t.priority === 'week' && (t.cat === 'Personeel' || t.cat === 'HR'));
+  const rest = open.filter(t => t.priority === 'week' && t.cat !== 'Financieel' && t.cat !== 'Personeel' && t.cat !== 'HR');
+
+  const slots = [
+    { time: '08:00', tasks: [{ label: 'Start van de dag', text: 'Mail checken, prioriteiten bevestigen', kleur: '' }] },
+    { time: '08:30', tasks: direct.slice(0,2).map(t => ({ label: 'DIRECT', text: t.text, kleur: 'rood' })) },
+    { time: '09:30', tasks: week.slice(0,3).map(t => ({ label: 'FINANCIEEL', text: t.text, kleur: 'oranje' })) },
+    { time: '11:30', tasks: [{ label: 'Blok', text: 'Telefoontjes & korte overleggen', kleur: '' }] },
+    { time: '13:00', tasks: [{ label: 'Pauze', text: '🍽️ Lunch', kleur: '' }] },
+    { time: '13:30', tasks: personeel.slice(0,2).map(t => ({ label: 'PERSONEEL/HR', text: t.text, kleur: 'blauw' })) },
+    { time: '14:30', tasks: rest.slice(0,2).map(t => ({ label: 'OPERATIE', text: t.text, kleur: 'oranje' })) },
+    { time: '16:00', tasks: [{ label: 'Afronden', text: 'Mail beantwoorden, morgen voorbereiden', kleur: '' }] },
+    { time: '17:00', tasks: [{ label: 'Einde dag', text: '✅ Check wat afgevinkt is', kleur: '' }] },
+  ];
+
+  let html = '';
+  slots.forEach(slot => {
+    const taskHtml = slot.tasks.length
+      ? slot.tasks.map(t => `<div class="slot-task ${t.kleur}"><div class="slot-label">${t.label}</div>${t.text}</div>`).join('')
+      : `<div class="slot-task" style="opacity:0.3;border-color:var(--border)">Vrij</div>`;
+    html += `<div class="time-slot">${slot.time}</div><div class="slot-content">${taskHtml}</div>`;
+  });
+
+  document.getElementById('dayGrid').innerHTML = html;
+}
+
+function renderAnalyse() {
+  const open = tasks.filter(t => !t.done);
+  const done = tasks.filter(t => t.done);
+  const direct = open.filter(t => t.priority === 'direct');
+  const fin = open.filter(t => t.cat === 'Financieel');
+  const hr = open.filter(t => t.cat === 'HR' || (t.cat === 'Personeel' && t.priority === 'week'));
+
+  const pct = n => Math.round((n / tasks.length) * 100);
+
+  document.getElementById('analyseContent').innerHTML = `
+    <div class="focus-box">
+      <h3>🎯 Focus nu – Top 3 acties</h3>
+      <div class="focus-list">
+        <div class="focus-item"><div class="focus-num">1</div>Guido – mail versturen (reclame + overzicht)</div>
+        <div class="focus-item"><div class="focus-num">2</div>Lefier – Benningweg 12, Harkstede (prijs maken)</div>
+        <div class="focus-item"><div class="focus-num">3</div>Fivelstraat + Lars Lingbeek – financieel blok starten</div>
+      </div>
+    </div>
+
+    <div class="analyse-card">
+      <h3>📊 Voortgang per categorie</h3>
+      ${renderProgress('Direct open', direct.length, tasks.filter(t=>t.priority==='direct').length, 'var(--red)')}
+      ${renderProgress('Financieel', fin.length, tasks.filter(t=>t.cat==='Financieel').length, 'var(--orange)')}
+      ${renderProgress('Personeel/HR', hr.length, tasks.filter(t=>t.cat==='HR'||t.cat==='Personeel').length, 'var(--accent3)')}
+      ${renderProgress('Totaal', open.length, tasks.length, 'var(--green)')}
+    </div>
+
+    <div class="analyse-card">
+      <h3>💡 Analyse van je lijst</h3>
+      <ul>
+        <li><strong>Financieel blok is groot:</strong> ${fin.length} open taken — dit is waar je geld zit. Blokkeer morgenochtend 2 uur.</li>
+        <li><strong>Personeel loopt op:</strong> Thomas + Stan + Jitse + Antema staan allemaal open. Plan deze week 1 gespreksmiddag.</li>
+        <li><strong>Marketing wacht op Guido:</strong> Zodra die mail klaar is, loopt de rest vanzelf.</li>
+        <li><strong>Direct actiepunten:</strong> Slechts ${direct.length} taken staan als DIRECT gemarkeerd. Dat is beheersbaar.</li>
+        <li><strong>Strategie heeft ruimte:</strong> MT-structuur en certificeringen zijn langetermijn — plan die pas als financieel en HR lopen.</li>
+      </ul>
+    </div>
+
+    <div class="analyse-card">
+      <h3>📅 Weekadvies</h3>
+      <ul>
+        <li><strong>Vandaag:</strong> Guido mail → Lefier prijsopgave</li>
+        <li><strong>Morgen:</strong> Financieel blok (Fivelstraat, Lars, Bolhuis, Ramona)</li>
+        <li><strong>Dinsdag/Woensdag:</strong> Personeel (Thomas, Riem, Henk)</li>
+        <li><strong>Donderdag:</strong> HR (Stan, Jitse functioneringsgesprekken inplannen)</li>
+        <li><strong>Vrijdag:</strong> Terugkijken, afvinken, volgende week plannen</li>
+      </ul>
+    </div>
+  `;
+}
+
+function renderProgress(label, open, total, color) {
+  const done = total - open;
+  const pct = total ? Math.round((done / total) * 100) : 0;
+  return `<div class="progress-row">
+    <div class="progress-label">${label}</div>
+    <div class="progress-bar"><div class="progress-fill" style="width:${pct}%;background:${color}"></div></div>
+    <div class="progress-pct">${pct}%</div>
+  </div>`;
+}
+
+function renderAll() {
+  renderStats();
+  renderTasks();
+  renderDag();
+  renderAnalyse();
+}
+
+function showPanel(name) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+renderAll();
+
+// ---- SPRAAKHERKENNING ----
+let recognition = null;
+let isListening = false;
+
+function initSpeech() {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) {
+    document.getElementById('micStatus').textContent = '⚠️ Spraakherkenning niet ondersteund. Gebruik Chrome.';
+    document.getElementById('micBtn').disabled = true;
+    return null;
+  }
+  const r = new SpeechRecognition();
+  r.lang = 'nl-NL';
+  r.continuous = false;
+  r.interimResults = true;
+
+  r.onstart = () => {
+    isListening = true;
+    document.getElementById('micBtn').classList.add('listening');
+    document.getElementById('micBtn').textContent = '⏹';
+    document.getElementById('micStatus').textContent = '🔴 Luisteren... spreek nu je taak in';
+    document.getElementById('micStatus').classList.add('active');
+  };
+
+  r.onresult = (e) => {
+    let interim = '';
+    let final = '';
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      const t = e.results[i][0].transcript;
+      if (e.results[i].isFinal) final += t;
+      else interim += t;
+    }
+    document.getElementById('newTaskInput').value = final || interim;
+    if (final) {
+      document.getElementById('micStatus').textContent = '✅ Herkend: "' + final.trim() + '" — klik Toevoegen of spreek opnieuw';
+      document.getElementById('micStatus').classList.remove('active');
+    }
+  };
+
+  r.onerror = (e) => {
+    const msgs = {
+      'not-allowed': '⚠️ Microfoon toegang geweigerd. Sta toegang toe in je browser.',
+      'no-speech': '⚠️ Geen spraak herkend. Probeer opnieuw.',
+      'network': '⚠️ Netwerkfout bij spraakherkenning.',
+    };
+    document.getElementById('micStatus').textContent = msgs[e.error] || '⚠️ Fout: ' + e.error;
+    document.getElementById('micStatus').classList.remove('active');
+    stopListening();
+  };
+
+  r.onend = () => { stopListening(); };
+  return r;
+}
+
+function stopListening() {
+  isListening = false;
+  const btn = document.getElementById('micBtn');
+  btn.classList.remove('listening');
+  btn.textContent = '🎤';
+}
+
+function toggleMic() {
+  if (!recognition) recognition = initSpeech();
+  if (!recognition) return;
+  if (isListening) {
+    recognition.stop();
+    stopListening();
+    document.getElementById('micStatus').textContent = '🎤 Druk op de microfoon en spreek je taak in';
+  } else {
+    document.getElementById('newTaskInput').value = '';
+    recognition.start();
+  }
+}
+
+
+// ---- INSTALL BANNER ----
+function showInstallBanner() {
+  const banner = document.getElementById('installBanner');
+  const dismissed = localStorage.getItem('installDismissed');
+  // Show if not on standalone (i.e. not already installed) and not dismissed
+  const isStandalone = window.navigator.standalone === true;
+  if (!isStandalone && !dismissed) {
+    banner.classList.add('show');
+  }
+}
+function closeInstall() {
+  document.getElementById('installBanner').classList.remove('show');
+  localStorage.setItem('installDismissed', '1');
+}
+showInstallBanner();
+
+</script>
+
+</body>
+</html>
