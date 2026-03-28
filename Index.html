@@ -427,33 +427,6 @@ min-height: 18px;
 font-style: italic;
 }
 .mic-status.active { color: var(–red); }
-
-/* INSTALL BANNER */
-.install-banner {
-background: linear-gradient(135deg, #1a1a1a, #242424);
-border: 1px solid rgba(61,122,58,0.3);
-border-radius: 14px;
-padding: 20px 22px;
-margin: 20px 0;
-display: none;
-}
-.install-banner.show { display: block; }
-.install-banner h3 { font-family: ‘Playfair Display’, serif; font-size: 16px; color: var(–accent); margin-bottom: 12px; }
-.install-steps { display: flex; flex-direction: column; gap: 10px; }
-.install-step {
-display: flex; align-items: flex-start; gap: 12px;
-font-size: 13px; color: var(–text2); line-height: 1.5;
-}
-.install-step-num {
-background: var(–accent); color: #000; font-weight: 700;
-font-size: 11px; width: 20px; height: 20px; border-radius: 50%;
-display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
-}
-.install-step strong { color: var(–text); }
-.install-close {
-margin-top: 14px; font-size: 12px; color: var(–text2);
-cursor: pointer; text-decoration: underline;
-}
 /* Safe area for iPhone notch */
 body { padding-bottom: env(safe-area-inset-bottom); }
 header { padding-top: max(18px, env(safe-area-inset-top)); }
@@ -607,21 +580,6 @@ text-align: center;
 </div>
 
 <div class="main">
-
-  <!-- INSTALL BANNER -->
-
-  <div class="install-banner" id="installBanner">
-    <h3>📱 Zet op je beginscherm</h3>
-    <div class="install-steps">
-      <div class="install-step"><div class="install-step-num">1</div><div>Ga naar <strong>github.com</strong> en maak een gratis account aan</div></div>
-      <div class="install-step"><div class="install-step-num">2</div><div>Maak een nieuwe repository aan, noem hem <strong>bedrijfsplanner</strong></div></div>
-      <div class="install-step"><div class="install-step-num">3</div><div>Upload dit bestand en hernoem het naar <strong>index.html</strong></div></div>
-      <div class="install-step"><div class="install-step-num">4</div><div>Ga naar <strong>Settings → Pages → Branch: main → Save</strong></div></div>
-      <div class="install-step"><div class="install-step-num">5</div><div>Open de link in <strong>Safari</strong> op je iPhone</div></div>
-      <div class="install-step"><div class="install-step-num">6</div><div>Tik op het <strong>Deel-icoon</strong> ↑ → kies <strong>"Zet op beginscherm"</strong></div></div>
-    </div>
-    <div class="install-close" onclick="closeInstall()">Sluiten</div>
-  </div>
 
   <!-- TO-DO PANEL -->
 
@@ -1004,21 +962,6 @@ function toggleMic() {
 }
 
 
-// ---- INSTALL BANNER ----
-function showInstallBanner() {
-  const banner = document.getElementById('installBanner');
-  const dismissed = localStorage.getItem('installDismissed');
-  // Show if not on standalone (i.e. not already installed) and not dismissed
-  const isStandalone = window.navigator.standalone === true;
-  if (!isStandalone && !dismissed) {
-    banner.classList.add('show');
-  }
-}
-function closeInstall() {
-  document.getElementById('installBanner').classList.remove('show');
-  localStorage.setItem('installDismissed', '1');
-}
-showInstallBanner();
 
 // ---- HERINNERINGEN ----
 let currentReminderId = null;
