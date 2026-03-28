@@ -6,32 +6,33 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Planner">
-<meta name="theme-color" content="#0f0f0f">
-<title>Bedrijfsplanner</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta name="apple-mobile-web-app-title" content="Mollema">
+<meta name="theme-color" content="#4a7c59">
+<title>H.W. Mollema Planner</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Source+Sans+3:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0f0f0f;
-    --surface: #1a1a1a;
-    --surface2: #242424;
-    --border: #2e2e2e;
-    --accent: #e8c547;
-    --accent2: #e87347;
-    --accent3: #47b4e8;
-    --red: #e85447;
-    --orange: #e87347;
-    --green: #47e8a0;
+    --bg: #f4f1ec;
+    --surface: #ffffff;
+    --surface2: #ede9e2;
+    --border: #d8d2c8;
+    --accent: #4a7c59;
+    --accent2: #2d5a3d;
+    --accent3: #7aab8a;
+    --red: #c0392b;
+    --orange: #b8620a;
+    --green: #4a7c59;
     --gray: #888;
-    --text: #f0ede6;
-    --text2: #aaa;
-    --radius: 10px;
+    --text: #1e2a1e;
+    --text2: #6b7c6b;
+    --radius: 8px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234a7c59' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); }
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Source Sans 3', sans-serif;
     min-height: 100vh;
     padding: 0;
   }
@@ -49,12 +50,12 @@ top: 0;
 z-index: 100;
 }
 .logo {
-font-family: ‘DM Serif Display’, serif;
+font-family: ‘Playfair Display’, serif;
 font-size: 22px;
 color: var(–accent);
 letter-spacing: -0.5px;
 }
-.logo span { color: var(–text2); font-size: 13px; font-family: ‘DM Sans’, sans-serif; font-weight: 300; margin-left: 10px; }
+.logo span { color: var(–text2); font-size: 13px; font-family: ‘Source Sans 3’, sans-serif; font-weight: 300; margin-left: 10px; }
 .header-stats {
 display: flex;
 gap: 20px;
@@ -115,7 +116,7 @@ margin-bottom: 14px;
 }
 .section-icon { font-size: 16px; }
 .section-title {
-font-family: ‘DM Serif Display’, serif;
+font-family: ‘Playfair Display’, serif;
 font-size: 17px;
 color: var(–text);
 }
@@ -249,7 +250,7 @@ padding: 20px 24px;
 margin-bottom: 16px;
 }
 .analyse-card h3 {
-font-family: ‘DM Serif Display’, serif;
+font-family: ‘Playfair Display’, serif;
 font-size: 16px;
 margin-bottom: 12px;
 display: flex;
@@ -262,14 +263,14 @@ gap: 8px;
 .analyse-card li strong { color: var(–text); }
 
 .focus-box {
-background: linear-gradient(135deg, rgba(232,197,71,0.08), rgba(232,115,71,0.06));
-border: 1px solid rgba(232,197,71,0.25);
+background: linear-gradient(135deg, rgba(74,124,89,0.08), rgba(45,90,61,0.06));
+border: 1px solid rgba(74,124,89,0.25);
 border-radius: var(–radius);
 padding: 20px 24px;
 margin-bottom: 16px;
 }
 .focus-box h3 {
-font-family: ‘DM Serif Display’, serif;
+font-family: ‘Playfair Display’, serif;
 font-size: 18px;
 color: var(–accent);
 margin-bottom: 10px;
@@ -331,7 +332,7 @@ border: 1px solid var(–border);
 border-radius: var(–radius);
 padding: 11px 16px;
 color: var(–text);
-font-family: ‘DM Sans’, sans-serif;
+font-family: ‘Source Sans 3’, sans-serif;
 font-size: 14px;
 outline: none;
 transition: border-color 0.2s;
@@ -344,7 +345,7 @@ border: 1px solid var(–border);
 border-radius: var(–radius);
 padding: 11px 12px;
 color: var(–text);
-font-family: ‘DM Sans’, sans-serif;
+font-family: ‘Source Sans 3’, sans-serif;
 font-size: 13px;
 outline: none;
 cursor: pointer;
@@ -355,7 +356,7 @@ color: #000;
 border: none;
 border-radius: var(–radius);
 padding: 11px 20px;
-font-family: ‘DM Sans’, sans-serif;
+font-family: ‘Source Sans 3’, sans-serif;
 font-weight: 600;
 font-size: 13px;
 cursor: pointer;
@@ -433,14 +434,14 @@ font-style: italic;
 /* INSTALL BANNER */
 .install-banner {
 background: linear-gradient(135deg, #1a1a1a, #242424);
-border: 1px solid rgba(232,197,71,0.3);
+border: 1px solid rgba(74,124,89,0.3);
 border-radius: 14px;
 padding: 20px 22px;
 margin: 20px 0;
 display: none;
 }
 .install-banner.show { display: block; }
-.install-banner h3 { font-family: ‘DM Serif Display’, serif; font-size: 16px; color: var(–accent); margin-bottom: 12px; }
+.install-banner h3 { font-family: ‘Playfair Display’, serif; font-size: 16px; color: var(–accent); margin-bottom: 12px; }
 .install-steps { display: flex; flex-direction: column; gap: 10px; }
 .install-step {
 display: flex; align-items: flex-start; gap: 12px;
@@ -459,13 +460,133 @@ cursor: pointer; text-decoration: underline;
 /* Safe area for iPhone notch */
 body { padding-bottom: env(safe-area-inset-bottom); }
 header { padding-top: max(18px, env(safe-area-inset-top)); }
+
+/* REMINDER */
+.reminder-btn {
+background: none;
+border: 1px solid var(–border);
+border-radius: 6px;
+padding: 3px 7px;
+font-size: 11px;
+color: var(–text2);
+cursor: pointer;
+white-space: nowrap;
+flex-shrink: 0;
+transition: all 0.2s;
+}
+.reminder-btn:hover { border-color: var(–accent); color: var(–accent); }
+.reminder-btn.set { background: rgba(74,124,89,0.1); border-color: var(–accent); color: var(–accent); }
+
+.reminder-modal {
+display: none;
+position: fixed;
+inset: 0;
+background: rgba(0,0,0,0.4);
+z-index: 200;
+align-items: flex-end;
+justify-content: center;
+}
+.reminder-modal.show { display: flex; }
+.reminder-sheet {
+background: var(–surface);
+border-radius: 20px 20px 0 0;
+padding: 24px 24px 40px;
+width: 100%;
+max-width: 500px;
+}
+.reminder-sheet h3 {
+font-family: ‘Playfair Display’, serif;
+font-size: 17px;
+margin-bottom: 6px;
+color: var(–text);
+}
+.reminder-task-name {
+font-size: 13px;
+color: var(–text2);
+margin-bottom: 18px;
+line-height: 1.4;
+}
+.reminder-label { font-size: 12px; font-weight: 600; color: var(–text2); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; }
+.reminder-input {
+width: 100%;
+background: var(–surface2);
+border: 1px solid var(–border);
+border-radius: 8px;
+padding: 11px 14px;
+color: var(–text);
+font-family: ‘Source Sans 3’, sans-serif;
+font-size: 15px;
+outline: none;
+margin-bottom: 16px;
+}
+.reminder-input:focus { border-color: var(–accent); }
+.reminder-actions { display: flex; gap: 10px; }
+.reminder-save {
+flex: 1;
+background: var(–accent);
+color: #fff;
+border: none;
+border-radius: 10px;
+padding: 13px;
+font-family: ‘Source Sans 3’, sans-serif;
+font-weight: 600;
+font-size: 15px;
+cursor: pointer;
+}
+.reminder-cancel {
+background: var(–surface2);
+color: var(–text2);
+border: none;
+border-radius: 10px;
+padding: 13px 18px;
+font-family: ‘Source Sans 3’, sans-serif;
+font-size: 15px;
+cursor: pointer;
+}
+.reminder-delete {
+background: rgba(192,57,43,0.1);
+color: var(–red);
+border: none;
+border-radius: 10px;
+padding: 13px 14px;
+font-family: ‘Source Sans 3’, sans-serif;
+font-size: 13px;
+cursor: pointer;
+}
+.task-reminder-tag {
+font-size: 10px;
+color: var(–accent);
+margin-top: 3px;
+display: flex;
+align-items: center;
+gap: 3px;
+}
+.notif-banner {
+position: fixed;
+top: 20px;
+left: 50%;
+transform: translateX(-50%);
+background: var(–accent);
+color: #fff;
+padding: 12px 20px;
+border-radius: 12px;
+font-size: 14px;
+font-weight: 500;
+z-index: 300;
+box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+display: none;
+max-width: 340px;
+text-align: center;
+}
+.notif-banner.show { display: block; animation: slideDown 0.3s ease; }
+@keyframes slideDown { from { top: -60px; opacity: 0; } to { top: 20px; opacity: 1; } }
 </style>
 
 </head>
 <body>
 
 <header>
-  <div class="logo">Bedrijfsplanner <span>jouw command center</span></div>
+  <div class="logo"><img src="https://www.hwmollema.nl/static/assets/logo-2024.svg" alt="H.W. Mollema" style="height:36px;"> <span>bedrijfsplanner</span></div>
   <div class="header-stats">
     <div class="stat">
       <div class="stat-num" id="totalTasks">0</div>
@@ -562,6 +683,23 @@ header { padding-top: max(18px, env(safe-area-inset-top)); }
   <div class="panel" id="panel-analyse">
     <div id="analyseContent"></div>
   </div>
+
+<!-- REMINDER MODAL -->
+
+<div class="reminder-modal" id="reminderModal">
+  <div class="reminder-sheet">
+    <h3>🔔 Herinnering instellen</h3>
+    <div class="reminder-task-name" id="reminderTaskName"></div>
+    <div class="reminder-label">Datum & tijd</div>
+    <input type="datetime-local" class="reminder-input" id="reminderDatetime">
+    <div class="reminder-actions">
+      <button class="reminder-cancel" onclick="closeReminder()">Annuleren</button>
+      <button class="reminder-delete" id="reminderDeleteBtn" onclick="deleteReminder()" style="display:none">Verwijder</button>
+      <button class="reminder-save" onclick="saveReminder()">✓ Instellen</button>
+    </div>
+  </div>
+</div>
+<div class="notif-banner" id="notifBanner"></div>
 
 </div>
 
@@ -661,11 +799,15 @@ function renderTasks() {
       </div>
       <div class="tasks">`;
     items.forEach(t => {
-      html += `<div class="task ${g.key} ${t.done ? 'done' : ''}" onclick="toggleTask(${t.id})">
-        <div class="checkbox"><span class="checkmark">✓</span></div>
-        <div class="task-content">
+      const reminderLabel = t.reminder ? '🔔 ' + formatReminder(t.reminder) : '🔔';
+      const reminderClass = t.reminder ? 'set' : '';
+      html += `<div class="task ${g.key} ${t.done ? 'done' : ''}">
+        <div class="checkbox" onclick="toggleTask(${t.id})"><span class="checkmark">✓</span></div>
+        <div class="task-content" onclick="toggleTask(${t.id})">
           <div class="task-text">${t.text}</div>
+          ${t.reminder ? `<div class="task-reminder-tag">🔔 ${formatReminder(t.reminder)}</div>` : ''}
         </div>
+        <button class="reminder-btn ${reminderClass}" onclick="openReminder(${t.id})" title="Herinnering instellen">${t.reminder ? '🔔' : '🔔'}</button>
         <div class="task-cat">${t.cat}</div>
       </div>`;
     });
@@ -879,6 +1021,101 @@ function closeInstall() {
   localStorage.setItem('installDismissed', '1');
 }
 showInstallBanner();
+
+// ---- HERINNERINGEN ----
+let currentReminderId = null;
+let reminderTimers = {};
+
+function formatReminder(dt) {
+  const d = new Date(dt);
+  const now = new Date();
+  const diff = d - now;
+  const days = Math.floor(diff / 86400000);
+  const opts = { weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+  if (days === 0) return 'Vandaag ' + d.toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' });
+  if (days === 1) return 'Morgen ' + d.toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' });
+  return d.toLocaleDateString('nl-NL', opts);
+}
+
+function openReminder(id) {
+  currentReminderId = id;
+  const t = tasks.find(t => t.id === id);
+  document.getElementById('reminderTaskName').textContent = t.text;
+  const input = document.getElementById('reminderDatetime');
+  if (t.reminder) {
+    input.value = t.reminder;
+    document.getElementById('reminderDeleteBtn').style.display = 'block';
+  } else {
+    // Default: tomorrow 9:00
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(9, 0, 0, 0);
+    input.value = tomorrow.toISOString().slice(0, 16);
+    document.getElementById('reminderDeleteBtn').style.display = 'none';
+  }
+  document.getElementById('reminderModal').classList.add('show');
+}
+
+function closeReminder() {
+  document.getElementById('reminderModal').classList.remove('show');
+  currentReminderId = null;
+}
+
+function saveReminder() {
+  const dt = document.getElementById('reminderDatetime').value;
+  if (!dt) return;
+  const t = tasks.find(t => t.id === currentReminderId);
+  if (t) {
+    t.reminder = dt;
+    save();
+    scheduleReminder(t);
+    renderAll();
+    showNotifBanner('🔔 Herinnering ingesteld voor ' + formatReminder(dt));
+  }
+  closeReminder();
+}
+
+function deleteReminder() {
+  const t = tasks.find(t => t.id === currentReminderId);
+  if (t) {
+    if (reminderTimers[t.id]) { clearTimeout(reminderTimers[t.id]); }
+    delete t.reminder;
+    save();
+    renderAll();
+  }
+  closeReminder();
+}
+
+function scheduleReminder(task) {
+  if (reminderTimers[task.id]) clearTimeout(reminderTimers[task.id]);
+  const delay = new Date(task.reminder) - new Date();
+  if (delay > 0 && delay < 86400000 * 2) {
+    reminderTimers[task.id] = setTimeout(() => {
+      showNotifBanner('🔔 Herinnering: ' + task.text);
+      if ('Notification' in window && Notification.permission === 'granted') {
+        new Notification('H.W. Mollema Planner', { body: task.text, icon: 'https://www.hwmollema.nl/static/assets/logo-icon2024.svg' });
+      }
+    }, delay);
+  }
+}
+
+function showNotifBanner(msg) {
+  const b = document.getElementById('notifBanner');
+  b.textContent = msg;
+  b.classList.add('show');
+  setTimeout(() => b.classList.remove('show'), 4000);
+}
+
+function initReminders() {
+  // Request notification permission
+  if ('Notification' in window && Notification.permission === 'default') {
+    Notification.requestPermission();
+  }
+  // Schedule all existing reminders
+  tasks.forEach(t => { if (t.reminder) scheduleReminder(t); });
+}
+
+initReminders();
 
 </script>
 
